@@ -1,18 +1,22 @@
-var data;
+let username;
+let token;
+
+let userInfo;
+let userRepos;
 
 async function accessApi() {
     event.preventDefault();
-    const username = document.getElementById("username").value;
-    const token = document.getElementById("token").value
-    //alert(token);
-    data = await getData(username, token).catch(e => console.error(e));
-    //console.log(result);
-    console.log(data)
+    
+    username = document.getElementById("username").value
+    token = document.getElementById("token").value
+    
+    userInfo = await getUserInfo()
+    userRepos = await getUserRepos()
+    
+    console.log(userRepos)
 }
 
-async function getData(username, token) {
-    let url = `https://api.github.com/users/${username}/repos`;
-
+async function getData(url, token) {
     const headers = {
         'Authorization': `Token ${token}`
     }
@@ -22,7 +26,15 @@ async function getData(username, token) {
         'headers': headers
     });
 
-    let data = await response.json();
-    
-    return data;
+    return await response.json()
+}
+
+async function getUserInfo() {
+    let url = `https://api.github.com/users/${username}`
+    return await getData(url, token).catch(e => console.error(e))
+}
+
+async function getUserRepos() {
+    let url = `https://api.github.com/users/${username}/repos`
+    return await getData(url, token).catch(e => console.error(e))
 }
