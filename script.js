@@ -1,3 +1,5 @@
+let app_id
+
 let username;
 let token;
 
@@ -13,7 +15,7 @@ async function accessApi() {
     userInfo = await getUserInfo()
     userRepos = await getUserRepos()
     
-    console.log(userRepos)
+    displayUserInfo()
 }
 
 async function getData(url, token) {
@@ -37,4 +39,21 @@ async function getUserInfo() {
 async function getUserRepos() {
     let url = `https://api.github.com/users/${username}/repos`
     return await getData(url, token).catch(e => console.error(e))
+}
+
+function displayUserInfo() {
+    document.getElementById("info-container").innerHTML = `
+        <div class="card" onclick="window.open('${userInfo.html_url}', '_blank')">
+            <img id="avatar" src="${userInfo.avatar_url} alt="Avatar"/>
+            <div class="card-text">
+                <h1 id="info-title">${userInfo.name}</h1>
+                <p>${userInfo.login}</p>
+                <p><br>${userInfo.bio}</p>
+                <p>${userInfo.location}</p>
+                <p><br>Followers: ${userInfo.followers}</p>
+                <p>Following: ${userInfo.following}</p>
+                <p>Public Repositories: ${userInfo.public_repos}</p>
+            </div>
+        </div>
+    `
 }

@@ -56,3 +56,36 @@ form button:hover {
     background: #fda085;
     color: white;
 }
+
+div#info-container {
+    padding: 50px;
+    text-align: center;
+}
+
+.card {
+    display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    animation-name: pop-in;
+    animation-duration: 1s;
+    min-height: 20rem;
+    max-height: 30rem;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.card-text {
+    padding: 50px;
+    text-align: left;
+}
+
+@keyframes fade-in {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@keyframes pop-in {
+    0% { opacity: 0; -webkit-transform: scale(0.5); }
+    100% { opacity: 1; -webkit-transform: scale(1); }
+}
