@@ -44,8 +44,7 @@ async function getUserRepos() {
 }
 
 function displayLoader() {
-    let loader = `<div class="loader"></div>`
-    document.getElementById("info-container").innerHTML = loader
+    document.getElementById("info-container").innerHTML = `<div class="loader"></div>`
 }
 
 function displayUserInfo() {
@@ -64,3 +63,4 @@ function displayUserInfo() {
         </div>
     `
 }
+
