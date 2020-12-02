@@ -1,10 +1,9 @@
-let app_id
-
 let username;
 let token;
 
 let userInfo;
 let userRepos;
+let repoSizes;
 
 async function accessApi() {
     event.preventDefault();
@@ -18,6 +17,9 @@ async function accessApi() {
     userRepos = await getUserRepos()
     
     displayUserInfo()
+
+    repoSizes = getUserRepoSizes()
+    displayRepoSizesGraph()
 }
 
 async function getData(url, token) {
@@ -61,6 +63,18 @@ function displayUserInfo() {
                 <p>Public Repositories: ${userInfo.public_repos}</p>
             </div>
         </div>
+    `
+}
+
+function getUserRepoSizes() {
+    return userRepos.map(function(repo) {
+        return repo.size
+    })
+}
+
+function displayRepoSizesGraph() {
+    document.getElementById("repo-sizes-graph-container").innerHTML = `
+        These are the sizes of each repositories (KB): ${repoSizes}, these will soon be graphed! :)
     `
 }
 
