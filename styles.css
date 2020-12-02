@@ -19,6 +19,8 @@ header, form {
     display: flex;
     justify-content: center;
     align-items: center;
+    animation-name: pop-in;
+    animation-duration: 1s;
 }
 
 header, form#username {
@@ -86,6 +88,40 @@ div#info-container {
 }
 
 @keyframes pop-in {
-    0% { opacity: 0; -webkit-transform: scale(0.5); }
-    100% { opacity: 1; -webkit-transform: scale(1); }
+    0% { 
+        opacity: 0;
+        -webkit-transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+    }
+}
+
+.loader {
+    padding: 10rem 0rem 10rem 0rem;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+}
+
+.loader:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: loader 1.2s linear infinite;
+}
+
+@keyframes loader {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

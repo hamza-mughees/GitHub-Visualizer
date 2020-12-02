@@ -12,6 +12,8 @@ async function accessApi() {
     username = document.getElementById("username").value
     token = document.getElementById("token").value
     
+    displayLoader()
+
     userInfo = await getUserInfo()
     userRepos = await getUserRepos()
     
@@ -23,10 +25,10 @@ async function getData(url, token) {
         'Authorization': `Token ${token}`
     }
 
-    const response = await fetch(url, {
+    const response = token != undefined ? await fetch(url, {
         'method': 'GET',
         'headers': headers
-    });
+    }) : await fetch(url);
 
     return await response.json()
 }
@@ -39,6 +41,11 @@ async function getUserInfo() {
 async function getUserRepos() {
     let url = `https://api.github.com/users/${username}/repos`
     return await getData(url, token).catch(e => console.error(e))
+}
+
+function displayLoader() {
+    let loader = `<div class="loader"></div>`
+    document.getElementById("info-container").innerHTML = loader
 }
 
 function displayUserInfo() {
