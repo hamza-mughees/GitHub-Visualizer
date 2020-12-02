@@ -69,8 +69,6 @@ div#info-container {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     animation-name: pop-in;
     animation-duration: 1s;
-    min-height: 20rem;
-    max-height: 30rem;
 }
 
 .card:hover {
@@ -99,8 +97,8 @@ div#info-container {
 }
 
 .loader {
-    padding: 10rem 0rem 10rem 0rem;
-    display: inline-block;
+    padding: 15rem 0rem 15rem 0rem;
+    margin: auto;
     width: 80px;
     height: 80px;
 }
@@ -124,4 +122,23 @@ div#info-container {
     100% {
         transform: rotate(360deg);
     }
+}
+
+div#visualizations {
+    padding: 3rem;
+}
+
+div#repo-sizes-graph-container {
+    align-content: center;
+    background-color: white;
+    width: 100%;
+    border-radius: 25px;
+    animation-name: pop-in;
+    animation-duration: 1s;
+}
+
+canvas {
+    padding: 3rem;
+    animation-name: pop-in;
+    animation-duration: 1s;
 }

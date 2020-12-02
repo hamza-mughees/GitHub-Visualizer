@@ -3,6 +3,8 @@ let token;
 
 let userInfo;
 let userRepos;
+
+let repoNames;
 let repoSizes;
 
 async function accessApi() {
@@ -11,14 +13,16 @@ async function accessApi() {
     username = document.getElementById("username").value
     token = document.getElementById("token").value
     
-    displayLoader()
+    displayLoader("info-container")
+    displayLoader("visualizations")
 
     userInfo = await getUserInfo()
-    userRepos = await getUserRepos()
-    
     displayUserInfo()
 
+    userRepos = await getUserRepos()
+
     repoSizes = getUserRepoSizes()
+    repoNames = getUserRepoNames()
     displayRepoSizesGraph()
 }
 
@@ -45,8 +49,8 @@ async function getUserRepos() {
     return await getData(url, token).catch(e => console.error(e))
 }
 
-function displayLoader() {
-    document.getElementById("info-container").innerHTML = `<div class="loader"></div>`
+function displayLoader(divId) {
+    document.getElementById(divId).innerHTML = `<div class="loader"></div>`
 }
 
 function displayUserInfo() {
@@ -72,9 +76,39 @@ function getUserRepoSizes() {
     })
 }
 
-function displayRepoSizesGraph() {
-    document.getElementById("repo-sizes-graph-container").innerHTML = `
-        These are the sizes of each repositories (KB): ${repoSizes}, these will soon be graphed! :)
-    `
+function getUserRepoNames() {
+    return userRepos.map(function(repo) {
+        return repo.name
+    })
 }
 
+function displayRepoSizesGraph() {
+    document.getElementById("visualizations").innerHTML = `
+    <div id="repo-sizes-graph-container">
+        <canvas id="repo-sizes-chart" width="200" height="150"></canvas>
+    </div>
+    `
+    var ctx = document.getElementById('repo-sizes-chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: repoNames,
+            datasets: [{
+                label: 'Repository Size',
+                data: repoSizes,
+                backgroundColor: 'rgba(253, 160, 133, 0.2)',
+                borderColor: 'rgba(253, 160, 133, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+}
