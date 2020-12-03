@@ -25,7 +25,7 @@ async function getData(url, token) {
         'Authorization': `Token ${token}`
     }
 
-    const response = token != undefined ? await fetch(url, {
+    const response = token != '' ? await fetch(url, {
         'method': 'GET',
         'headers': headers
     }) : await fetch(url);
