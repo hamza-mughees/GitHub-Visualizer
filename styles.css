@@ -13,6 +13,7 @@ body {
 
 header {
     font-size: 1.2rem;
+    padding: 10vh;
 }
 
 header, form {
@@ -21,10 +22,6 @@ header, form {
     align-items: center;
     animation-name: pop-in;
     animation-duration: 1s;
-}
-
-header, form#username {
-    min-height: 20vh;
 }
 
 form input#username {
@@ -60,12 +57,14 @@ form button:hover {
 }
 
 div#info-container {
-    padding: 50px;
+    padding: 100px 50px 50px 50px;
     text-align: center;
 }
 
 .card {
     display: flex;
+    max-width: 100rem;
+    margin: auto;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     animation-name: pop-in;
     animation-duration: 1s;
@@ -124,14 +123,22 @@ div#info-container {
     }
 }
 
-div#visualizations {
+div#visualization-1 {
     padding: 3rem;
+    max-width: 100rem;
+    margin: auto;
 }
 
-div#repo-sizes-graph-container {
+div#visualization-2 {
+    padding: 3rem;
+    max-width: 100rem;
+    margin: auto;
+}
+
+div#repo-sizes-graph-container, div#repo-languages-graph-container {
     align-content: center;
     background-color: white;
-    width: 100%;
+    margin: auto;
     border-radius: 25px;
     animation-name: pop-in;
     animation-duration: 1s;
