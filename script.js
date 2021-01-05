@@ -5,19 +5,18 @@ async function accessApi() {
     let token = document.getElementById("token").value
     
     displayLoader("info-container")
-    displayLoader("visualization-1")
 
     let userInfo = await getUserInfo(username, token)
-    displayUserInfo(userInfo)
-
     let userRepos = await getUserRepos(username, token)
-
     let repoLanguages = exploitData(userRepos, 'language')
-    displayRepoLanguagesGraph(repoLanguages)
-
     let repoSizes = exploitData(userRepos, 'size')
     let repoNames = exploitData(userRepos, 'name')
+    let commitsPerRepo = await getUserCommits(username, token, userRepos)
+
+    displayUserInfo(userInfo)
+    displayRepoLanguagesGraph(repoLanguages)
     displayRepoSizesGraph(repoNames, repoSizes)
+    displayRepoCommitsGraph(repoNames, commitsPerRepo)
 }
 
 async function getData(url, token) {
@@ -41,6 +40,23 @@ async function getUserInfo(username, token) {
 async function getUserRepos(username, token) {
     let url = `https://api.github.com/users/${username}/repos`
     return await getData(url, token).catch(e => console.error(e))
+}
+
+async function getUserCommits(username, token, userRepos) {
+    var commitsPerRepo = []
+
+    for (i in userRepos) {
+        let url = `https://api.github.com/repos/${username}/${userRepos[i].name}/stats/contributors`
+        let stats = await getData(url, token).catch(e => console.error(e))
+        for (j in stats) {
+            if (stats[j].author.login == username) {
+                commitsPerRepo[i] = stats[j].total
+                break
+            }
+        }
+    }
+
+    return commitsPerRepo
 }
 
 function displayLoader(divId) {
@@ -140,6 +156,40 @@ function displayRepoSizesGraph(repoNames, repoSizes) {
             datasets: [{
                 label: 'Repository Size',
                 data: repoSizes,
+                backgroundColor: colours,
+                borderColor: colours,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+}
+
+function displayRepoCommitsGraph(repoNames, repoCommits) {
+    let colours = randomColours(repoNames)
+
+    document.getElementById("visualization-3").innerHTML = `
+    <div id="repo-sizes-graph-container">
+        <canvas id="repo-commits-chart" width="400" height="200"></canvas>
+    </div>
+    `
+
+    var ctx = document.getElementById('repo-commits-chart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: repoNames,
+            datasets: [{
+                label: 'Repository Commits',
+                data: repoCommits,
                 backgroundColor: colours,
                 borderColor: colours,
                 borderWidth: 1

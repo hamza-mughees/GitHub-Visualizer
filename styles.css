@@ -135,6 +135,12 @@ div#visualization-2 {
     margin: auto;
 }
 
+div#visualization-3 {
+    padding: 3rem;
+    max-width: 100rem;
+    margin: auto;
+}
+
 div#repo-sizes-graph-container, div#repo-languages-graph-container {
     align-content: center;
     background-color: white;
