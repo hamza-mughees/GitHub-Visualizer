@@ -5,6 +5,9 @@ async function accessApi() {
     let token = document.getElementById("token").value
     
     displayLoader("info-container")
+    clearBox("visualization-1")
+    clearBox("visualization-2")
+    clearBox("visualization-3")
 
     let userInfo = await getUserInfo(username, token)
     let userRepos = await getUserRepos(username, token)
@@ -205,4 +208,8 @@ function displayRepoCommitsGraph(repoNames, repoCommits) {
             }
         }
     });
+}
+
+function clearBox(elementId) {
+    document.getElementById(elementId).innerHTML = ""
 }
